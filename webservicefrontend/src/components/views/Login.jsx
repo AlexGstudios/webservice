@@ -6,7 +6,7 @@ import AuthService from '../../services/AuthService';
 export const Login = () => {
     
     const [formUser, setFormUser] = useState({ username: "", password: ""});
-    const { setAuthenticated } = useContext(AuthContext);
+    const { setAuthenticated, setToken } = useContext(AuthContext);
     const history = useHistory();
 
     const changeUserData = (e) => {
@@ -15,9 +15,10 @@ export const Login = () => {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        const token = await AuthService("user", "login", "post", formUser);
+        const token = await AuthService("user", "login", "post", formUser, "header");
         if(token){
-            setAuthenticated(token);
+            setToken(token);
+            setAuthenticated(true);
             history.push("/products");
         }else{
             alert("Token missing");

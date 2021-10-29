@@ -13,7 +13,7 @@ export const Register = () => {
 
     const newUser = async (e) => {
         e.preventDefault();
-        const data = await AuthService("user", "register", "put", user);
+        const data = await AuthService("user", "register", "put", user, "JSON");
         if(data === "User has been registered."){
             history.push("/login");
         }else{

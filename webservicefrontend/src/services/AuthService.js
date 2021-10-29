@@ -1,32 +1,54 @@
-const AuthService = async (route, action, method, data) => {
+const AuthService = async (route, action, method, data, form, token) => {
     const _unAutherized = {
         Authed: false
     };
 
-    const _method = (method) => {
+    const _method = (method, form, token) => {
         if(method){
-            if(action === "login"){
-                return{
-                    method: method,
-                    headers: {"Content-Type": "application/json",
-                            username: data.username,
-                            password: data.password
+            switch (form) {
+                case "JSON":
+                    return{
+                        method: method,
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(data)
                     }
-                }
-            }
-            if(action === "register"){
-                return{
-                    method: method,
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(data)
-                }
+                case "header":
+                    return{
+                        method: method,
+                        headers: {"Content-Type": "application/json",
+                                username: data.username,
+                                password: data.password
+                        }
+                    }
+                case "token":
+                    return{
+                        headers: {"Content-Type": "application/json",
+                                token: token
+                        }
+                    }
+                case "headerAndJSON":
+                    return{
+                        method: method,
+                        headers: {"Content-Type": "application/json",
+                                token: token
+                        },
+                        body: JSON.stringify(data)
+                    }
+                default:
+                    return{
+                        method: method,
+                        headers: {"Content-Type": "application/json",
+                                token: token
+                        },
+                        body: data
+                    }
             }
         }
         return undefined;
     }
 
     try {
-        const res = await fetch(`/${route}/${action}`, _method(method));
+        const res = await fetch(`/${route}/${action}`, _method(method, form, token));
         if(res !== null){
             if(res.status === 200){
                 const contentType = res.headers.get("content-type");
