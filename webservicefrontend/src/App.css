@@ -39,6 +39,14 @@
 
 /* my css */
 
+/* body */
+
+body{
+  margin: 5% 0 0 0;
+}
+
+/* product and modal */
+
 .product{
   border: 2px solid black;
   background-color: rgba(120, 168, 192, 0.274);
@@ -64,4 +72,29 @@
   bottom: 0;
   background-color: rgba(0,0,0,0.7);
   z-index: 1000;
+}
+
+/* Navbar */
+
+.navbar{
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a{
+  color: #f2f2f2;
+  padding: 14px 16px;
+  border-radius: 5%;
+  text-decoration: none;
+  height: 5%;
+}
+
+.navbar a:hover{
+  background: #ddd;
+  color: black;
 }
